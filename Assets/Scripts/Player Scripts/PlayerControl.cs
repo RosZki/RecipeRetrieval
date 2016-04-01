@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour {
 
@@ -23,6 +24,8 @@ public class PlayerControl : MonoBehaviour {
     public bool canInteract = true;
     [HideInInspector]
     public float currInteractCooldown;
+    
+    public bool isObjectiveComplete = false;
 
     private float speed = 10;
     private float jumpForce = 27;
@@ -78,15 +81,33 @@ public class PlayerControl : MonoBehaviour {
         {
             Interact();
         }
-        
+        if (Input.GetAxis("Horizontal") < 0)
+        {
+            MoveLeft();
+        }
+        else
+        {
+            StopLeft();
+        }
+        if (Input.GetAxis("Horizontal") > 0)
+        {
+            MoveRight();
+        }
+        else
+        {
+            StopRight();
+        }
+        if (Input.GetButtonDown("Interact"))
+        {
+            Interact();
+        }
+
     }
     
 	void FixedUpdate () {
 
         //Control Script
         float h = 0;
-
-        h = Input.GetAxis("Horizontal");
 
         if (moveLeft && !moveRight)
             h = -1;
@@ -224,7 +245,9 @@ public class PlayerControl : MonoBehaviour {
     {
         if(other.gameObject.tag == "Enemies")
         {
-            //Debug.Log("Ouch");
+            CameraFader.FadeOutMain();
+            CameraFader.FadeInMain();
+            SceneManager.LoadScene("Game Over");
         }
         else
         {

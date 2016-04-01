@@ -45,7 +45,6 @@ public class EnemyScript : MonoBehaviour {
     public void Flip()
     {
         // Switch the way the player is labelled as facing.
-        // love me senpai <3
         facingRight = !facingRight;
 
         // Multiply the player's x local scale by -1.
@@ -68,6 +67,12 @@ public class EnemyScript : MonoBehaviour {
         speed = 10;
     }
 
-
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.tag == "Enemies")
+        {
+            Physics2D.IgnoreCollision(other.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        }
+    }
 
 }

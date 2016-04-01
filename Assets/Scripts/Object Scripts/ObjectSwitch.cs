@@ -39,7 +39,10 @@ public class ObjectSwitch : MonoBehaviour {
 
     public void StartCooldown()
     {
-        hasTimerStarted = true;
+        if (!isOn)
+        {
+            hasTimerStarted = true;
+        }
     }
 
     public void TurnSwitch()

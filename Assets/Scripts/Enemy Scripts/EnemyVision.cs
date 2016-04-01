@@ -25,7 +25,6 @@ public class EnemyVision : MonoBehaviour {
             {
                 if (!other.gameObject.GetComponent<PlayerControl>().isHiding)
                 {
-                    Debug.Log("Staht");
                     enemyObject.GetComponent<EnemyScript>().StartChase();
                     currTimeBeforeFlip = 0.0f;
                     inRangePlayer.Add(other.gameObject);
@@ -53,7 +52,6 @@ public class EnemyVision : MonoBehaviour {
         {
             if (inRangePlayer.Contains(other.gameObject))
             {
-                Debug.Log("Stahp");
                 enemyObject.GetComponent<EnemyScript>().StopChase();
                 currTimeBeforeFlip = 0.0f;
                 inRangePlayer.Remove(other.gameObject);

@@ -40,6 +40,11 @@ public class ObjectInteractable : MonoBehaviour {
             GetComponentInParent<ObjectSwitch>().StartCooldown();
             return true;
         }
+        else if (GetComponentInParent<ObjectExit>() != null)
+        {
+             return GetComponentInParent<ObjectExit>().Exit(playerObject);
+           
+        }
         return false;
     }
 

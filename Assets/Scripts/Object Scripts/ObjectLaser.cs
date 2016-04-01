@@ -29,12 +29,4 @@ public class ObjectLaser : MonoBehaviour {
         isOn = !isOn;
     }
 
-    /*void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "Enemies")
-        {
-            Physics2D.IgnoreCollision(other.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-        }
-    }*/
-
 }
