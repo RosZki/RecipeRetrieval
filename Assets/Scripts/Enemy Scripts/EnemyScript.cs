@@ -20,7 +20,7 @@ public class EnemyScript : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
         Patrol();
 
@@ -57,15 +57,17 @@ public class EnemyScript : MonoBehaviour {
     public void StartChase()
     {
         isChasingPlayer = true;
-        anim.SetTrigger("StartRun");
+        anim.speed = 2;
         speed = 15;
     }
 
     public void StopChase()
     {
         isChasingPlayer = false;
-        anim.SetTrigger("StopRun");
+        anim.speed = 0.5f;
         speed = 10;
     }
+
+
 
 }

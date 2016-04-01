@@ -63,13 +63,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\Button Cooldowns\ButtonInteractCooldown.cs" />
+    <Compile Include="Assets\Scripts\Button Cooldowns\ButtonJumpCooldown.cs" />
+    <Compile Include="Assets\Scripts\Camera Scripts\CameraFader.cs" />
+    <Compile Include="Assets\Scripts\Camera Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Enemy Scripts\EnemyScript.cs" />
     <Compile Include="Assets\Scripts\Enemy Scripts\EnemyVision.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\ObjectHide.cs" />
     <Compile Include="Assets\Scripts\Object Scripts\ObjectInteractable.cs" />
+    <Compile Include="Assets\Scripts\Object Scripts\ObjectLaser.cs" />
+    <Compile Include="Assets\Scripts\Object Scripts\ObjectSwitch.cs" />
+    <Compile Include="Assets\Scripts\Object Scripts\ObjectTravelPoint.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\PlayerControl.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\PlayerInteract.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\LevelSelector.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\MainMenuScript.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\ScrollViewSnap.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

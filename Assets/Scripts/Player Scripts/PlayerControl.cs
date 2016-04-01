@@ -4,6 +4,8 @@ using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
 
+    public float jumpCooldown;
+    public float interactCooldown;
 
     [HideInInspector]
     public bool facingRight = true;
@@ -12,8 +14,18 @@ public class PlayerControl : MonoBehaviour {
     [HideInInspector]
     public bool isHiding = false;
     
+    [HideInInspector]
+    public bool canJump = true;
+    [HideInInspector]
+    public float currJumpCooldown;
+
+    [HideInInspector]
+    public bool canInteract = true;
+    [HideInInspector]
+    public float currInteractCooldown;
+
     private float speed = 10;
-    private float jumpForce = 730f;
+    private float jumpForce = 27;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -23,13 +35,58 @@ public class PlayerControl : MonoBehaviour {
 	void Awake () {
         rb = this.GetComponent<Rigidbody2D>();
         anim = this.GetComponent<Animator>();
+        currJumpCooldown = jumpCooldown;
+        currInteractCooldown = interactCooldown;
 	}
 	
-	// Update is called once per frame
-	void Update () {
+    void Update()
+    {
+
+        if (!canJump)
+        {
+            if (currJumpCooldown < 0)
+            {
+                currJumpCooldown = jumpCooldown;
+                canJump = true;
+                
+            }
+            else
+            {
+                currJumpCooldown -= Time.deltaTime;
+            }
+        }
+
+        if (!canInteract)
+        {
+            if (currInteractCooldown < 0)
+            {
+                currInteractCooldown = interactCooldown;
+                canInteract = true;
+
+            }
+            else
+            {
+                currInteractCooldown -= Time.deltaTime;
+            }
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            StartJump();
+        }
+        if (Input.GetButtonDown("Interact"))
+        {
+            Interact();
+        }
+        
+    }
+    
+	void FixedUpdate () {
 
         //Control Script
-        int h = 0;
+        float h = 0;
+
+        h = Input.GetAxis("Horizontal");
 
         if (moveLeft && !moveRight)
             h = -1;
@@ -44,8 +101,9 @@ public class PlayerControl : MonoBehaviour {
 
         if (jump)
         {
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
-            
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+
+            StopJump();
             jump = false;
         }
 
@@ -64,64 +122,113 @@ public class PlayerControl : MonoBehaviour {
 
     public void MoveLeft()
     {
-        moveLeft = true;
-        anim.SetTrigger("StartWalk");
+        if (!isHiding)
+        {
+            moveLeft = true;
+            anim.SetTrigger("StartWalk");
+        }
+        
     }
 
     public void StopLeft()
     {
-        moveLeft = false;
-        anim.SetTrigger("StopWalk");
+        if (!isHiding)
+        {
+            moveLeft = false;
+            anim.SetTrigger("StopWalk");
+        }
+        
     }
 
     public void MoveRight()
     {
-        moveRight = true;
-        anim.SetTrigger("StartWalk");
+        if (!isHiding)
+        {
+            moveRight = true;
+            anim.SetTrigger("StartWalk");
+        }
+       
     }
 
     public void StopRight()
     {
-        moveRight = false;
-        anim.SetTrigger("StopWalk");
+        if (!isHiding)
+        {
+            moveRight = false;
+            anim.SetTrigger("StopWalk");
+        }
     }
 
     public void StartJump()
     {
-        jump = true;
+        if (!isHiding && canJump)
+        {
+            anim.SetTrigger("StartJump");
+            jump = true;
+            canJump = false;
+        }
     }
 
     public void StopJump()
     {
-        jump = false;
+        if (!isHiding)
+        {
+            anim.SetTrigger("StopJump");
+            jump = false;
+        }
     }
 
     public void Interact()
     {
-        if (transform.FindChild("InteractCollider").gameObject.GetComponent<PlayerInteract>().nearest != null)
+        if (canInteract)
         {
-            transform.FindChild("InteractCollider").gameObject.GetComponent<PlayerInteract>().nearest.GetComponent<ObjectInteractable>().Interact(transform.gameObject);
-        }
+            if (isHiding)
+            {
+                canInteract = false;
+                StopHide();
+            }
+            else
+            {
+                if (transform.FindChild("InteractCollider").gameObject.GetComponent<PlayerInteract>().nearest != null)
+                {
+                    bool hasInteracted = transform.FindChild("InteractCollider").gameObject.GetComponent<PlayerInteract>().nearest.GetComponent<ObjectInteractable>().Interact(transform.gameObject);
+                    if (hasInteracted)
+                    {
+                        canInteract = false;
+                    }
+                }
+            }
+        }       
+        
     }
 
     public void StartHide(Vector3 newPos)
     {
+        moveLeft = moveRight = false;
         transform.position = newPos;
-        isHiding = true;
-        //GetComponent<Collider2D>().enabled = false;
-        GetComponent<Rigidbody2D>().simulated = false;
+        isHiding = true;     
+        rb.simulated = false;
+        GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
         anim.SetTrigger("StartHide");
     }
 
-    void OnCollisionEnter2D(Collision2D other)
+    public void StopHide()
+    {
+        isHiding = false;
+        rb.simulated = true;
+        GetComponent<SpriteRenderer>().sortingLayerName = "Characters";
+        anim.SetTrigger("StopHide");
+    }
+
+    void OnCollisionStay2D(Collision2D other)
     {
         if(other.gameObject.tag == "Enemies")
         {
-            Debug.Log("Ouch");
+            //Debug.Log("Ouch");
         }
         else
         {
-            Debug.Log("Others");
+            //Debug.Log("Others");
         }
     }
 

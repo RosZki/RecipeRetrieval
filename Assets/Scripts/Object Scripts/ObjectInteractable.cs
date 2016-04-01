@@ -22,12 +22,25 @@ public class ObjectInteractable : MonoBehaviour {
         render.material.color = originalColor;
     }
 
-    public void Interact(GameObject playerObject)
+    public bool Interact(GameObject playerObject)
     {
-        if(transform.GetComponentInParent<ObjectHide>() != null)
+        if(GetComponentInParent<ObjectHide>() != null)
         {
-            transform.GetComponentInParent<ObjectHide>().Hide(playerObject);
+            GetComponentInParent<ObjectHide>().Hide(playerObject);
+            return true;
         }
+        else if(GetComponentInParent<ObjectTravelPoint>() != null)
+        {
+            GetComponentInParent<ObjectTravelPoint>().TravelToConnectedObject(playerObject);
+            return true;
+        }
+        else if(GetComponentInParent<ObjectSwitch>() != null)
+        {
+            GetComponentInParent<ObjectSwitch>().TurnSwitch();
+            GetComponentInParent<ObjectSwitch>().StartCooldown();
+            return true;
+        }
+        return false;
     }
 
 }
