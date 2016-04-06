@@ -6,15 +6,19 @@ public class ObjectInteractable : MonoBehaviour {
     private Color originalColor;
     private Renderer render;
 
+    private Color highlightColor;
+
 	// Use this for initialization
 	void Awake () {
         render = this.GetComponent<Renderer>();
         originalColor = render.material.color;
+        highlightColor = new Color(242/255.0f, 249 / 255.0f, 143 / 255.0f);
+       // highlightColor = Color.blue;
 	}
 	
 	public void Highlight()
     {
-        render.material.color = Color.yellow;
+        render.material.color = highlightColor;
     }
 
     public void UnHighlight()

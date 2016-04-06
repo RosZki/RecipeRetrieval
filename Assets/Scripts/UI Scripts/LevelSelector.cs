@@ -17,7 +17,7 @@ public class LevelSelector : MonoBehaviour {
         if (isLoad)
         {
             CameraFader.FadeOutMain();
-            CameraFader.FadeInMain();
+            //CameraFader.FadeInMain();
             SceneManager.LoadScene(level);
         }
     }

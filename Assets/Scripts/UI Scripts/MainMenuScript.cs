@@ -19,7 +19,7 @@ public class MainMenuScript : MonoBehaviour
             if (Input.touchCount >= 1 || Input.GetMouseButtonDown(0))
             {
                 CameraFader.FadeOutMain();
-                CameraFader.FadeInMain();
+                //CameraFader.FadeInMain();
                 SceneManager.LoadScene("World Select");
             }
         }

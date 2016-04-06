@@ -27,17 +27,17 @@ public class ButtonJumpCooldown : MonoBehaviour {
 
 	void Update () {
         if(!playerScript.canJump && !inCooldown)
-        {
-            StartCooldown();
-        }
-        if (inCooldown)
-        {
-            img.fillAmount -= 1.0f / playerScript.jumpCooldown * Time.deltaTime;
-        }
-        if(img.fillAmount <= 0 && playerScript.currJumpCooldown == playerScript.jumpCooldown)
-        {
-            inCooldown = false;
-        }
+         {
+             StartCooldown();
+         }
+         if (inCooldown)
+         {
+             img.fillAmount -= 1.0f / playerScript.jumpCooldown * Time.deltaTime;
+         }
+         if(img.fillAmount <= 0 && playerScript.currJumpCooldown == playerScript.jumpCooldown)
+         {
+             inCooldown = false;
+         }
 
     }
 }

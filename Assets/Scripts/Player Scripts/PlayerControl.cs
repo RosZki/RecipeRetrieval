@@ -72,8 +72,7 @@ public class PlayerControl : MonoBehaviour {
                 currInteractCooldown -= Time.deltaTime;
             }
         }
-
-        if (Input.GetButtonDown("Jump"))
+        /*if (Input.GetButtonDown("Jump"))
         {
             StartJump();
         }
@@ -100,7 +99,7 @@ public class PlayerControl : MonoBehaviour {
         if (Input.GetButtonDown("Interact"))
         {
             Interact();
-        }
+        }*/
 
     }
     
@@ -115,6 +114,7 @@ public class PlayerControl : MonoBehaviour {
         if (moveRight && !moveLeft)
             h = 1;
         
+
         rb.velocity = new Vector2(h * speed, rb.velocity.y);
 
         if ((h > 0 && !facingRight) || (h < 0 && facingRight))
