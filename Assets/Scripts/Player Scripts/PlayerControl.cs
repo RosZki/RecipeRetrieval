@@ -8,6 +8,8 @@ public class PlayerControl : MonoBehaviour {
     public float jumpCooldown;
     public float interactCooldown;
 
+    public AudioSource jumpAudio;
+
     [HideInInspector]
     public bool facingRight = true;
     [HideInInspector]
@@ -185,6 +187,7 @@ public class PlayerControl : MonoBehaviour {
         if (!isHiding && canJump)
         {
             anim.SetTrigger("StartJump");
+            jumpAudio.Play();
             jump = true;
             canJump = false;
         }

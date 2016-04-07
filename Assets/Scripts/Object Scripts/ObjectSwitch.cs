@@ -4,6 +4,7 @@ using System.Collections;
 public class ObjectSwitch : MonoBehaviour {
 
     public GameObject[] listObjects;
+    public AudioSource switchAudio;
     public float timer;
 
     private Animator anim;
@@ -62,6 +63,7 @@ public class ObjectSwitch : MonoBehaviour {
         {
             anim.SetTrigger("TurnOn");
         }
+        switchAudio.Play();
         isOn = !isOn;
     }
 
